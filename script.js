@@ -27,3 +27,17 @@ document.body.appendChild(s);(function(s){setTimeout(function(){s.remove()},1000
 document.addEventListener('pointerdown',function(e){burst(e.clientX,e.clientY)});
 var O=["Close your eyes and put your hand on your heart. That beat is me, right there with you. 💗🕸️𓏲ּ𝄢","You are stronger than you know, and you are never alone. Take a deep breath. This will pass, and I am here.","Somewhere, someone thinks you are the best thing that ever happened to them. That someone is me. 🤍"];
 function op(i){var p=document.getElementById('op');p.style.opacity=0;setTimeout(function(){p.textContent=O[i];p.style.transition='opacity .8s';p.style.opacity=1},250);hearts(3)}
+
+var au=document.getElementById('song'),mu=document.getElementById('music'),sk=document.getElementById('seek'),cu=document.getElementById('cur'),du=document.getElementById('dur'),pb=document.getElementById('pbtn');
+function fmt(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+('0'+s%60).slice(-2)}
+function toggleSong(){if(au.paused){var p=au.play();if(p&&p.catch)p.catch(function(){})}else au.pause()}
+pb.addEventListener('click',toggleSong);
+var vn=document.getElementById('vinyl');
+vn.addEventListener('click',toggleSong);
+vn.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleSong()}});
+au.addEventListener('play',function(){mu.classList.add('playing');pb.setAttribute('aria-label','Pause song');hearts(4)});
+au.addEventListener('pause',function(){mu.classList.remove('playing');pb.setAttribute('aria-label','Play song')});
+au.addEventListener('ended',function(){au.currentTime=0;sk.value=0;cu.textContent='0:00'});
+au.addEventListener('loadedmetadata',function(){du.textContent=fmt(au.duration)});
+au.addEventListener('timeupdate',function(){if(au.duration)sk.value=au.currentTime/au.duration*100;cu.textContent=fmt(au.currentTime)});
+sk.addEventListener('input',function(){if(au.duration){au.currentTime=sk.value/100*au.duration;cu.textContent=fmt(au.currentTime)}});
