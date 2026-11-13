@@ -39,3 +39,9 @@ h1{background:linear-gradient(90deg,var(--accent),#ffb3cf,var(--accent));backgro
 
 .ft{margin:36px 0 10px;font-size:.9rem;color:var(--muted);line-height:1.8}
 .ft a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+
+/* ---- audio-reactive background ---- */
+#bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+.card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.music .deck{box-shadow:0 10px calc(30px + var(--bass,0)*46px) var(--glow),inset 0 1px 0 rgba(255,255,255,.08)}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 45%,var(--glow),transparent 60%);opacity:calc(var(--pulse,0)*.35)}
