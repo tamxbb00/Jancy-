@@ -1,13 +1,13 @@
-var T="Happy Birthday, Jancy!",i=0,n=document.getElementById('name');
-(function t(){n.textContent=T.slice(0,i++);if(i<=T.length)setTimeout(t,90)})();
+var T="Happy Birthday, My Love, Jancy",i=0,n=document.getElementById('name');
+(function t(){n.textContent=T.slice(0,i++);if(i<=T.length)setTimeout(t,90);else n.insertAdjacentHTML('beforeend',' <span class="em">\ud83d\udc93\ud83e\udd79</span>')})();
 var bd=new Date(2026,10,18);
 function tick(){var d=bd-new Date(),e=document.getElementById('count');
 if(d>0)e.textContent=Math.floor(d/864e5)+' days '+Math.floor(d%864e5/36e5)+' hours to go \u2728';
 else e.textContent='It\u2019s your day! \ud83c\udf89'}
 tick();setInterval(tick,60000);
-var R=["Your smile makes my whole day better.","You make me feel at home.","You are the kindest person I know.","You make ordinary moments special.","With you, my heart is at peace.","You are simply you, and that is my favourite thing.","I don't need a reason to love you. You are the one I needed in my life. 💗"],ri=0;
+var R=["Your smile makes my whole day better.","You make me feel at home.","You are the kindest person I know.","You make ordinary moments special.","With you, my heart is at peace.","You are simply you, and that is my favourite thing.","You are my mentor and my queen. \ud83d\udc51","I don't need a reason to love you. You are the one I needed in my life. 💗"],ri=0;
 function nextR(){document.getElementById('reason').textContent=R[ri%R.length];ri++;hearts(3)}
-var L="Jancy,\n\nYou are the most lovable person in my world.\nThank you for every smile, every memory, and for just being you.\n\nI wish you a year full of happiness, peace, and all your dreams coming true.\n\nI love you. Happy Birthday.\n\n💗𓏲ּ𝄢  \u2190 you\n💗🕸️𓏲ּ𝄢  \u2190 me";
+var L="Jancy,\n\nYou are the most lovable person in my world.\nThank you for every smile, every memory, and for just being you.\n\nI wish you a year full of happiness, peace, and all your dreams coming true.\n\nYou are my mentor and my queen. \ud83d\udc51\n\nI love you. Happy Birthday.\n\n💗𓏲ּ𝄢  \u2190 you\n💗🕸️𓏲ּ𝄢  \u2190 me";
 var done=false;
 function go(){var m=document.getElementById('more');m.className='';m.scrollIntoView({behavior:'smooth'});hearts(10);
 if(done)return;done=true;var k=0,l=document.getElementById('letter');
