@@ -35,3 +35,96 @@
 @keyframes disc{to{transform:rotate(360deg)}}
 .label{width:42%;height:42%;border-radius:50%;object-fit:cover;border:4px solid var(--accent);box-shadow:0 0 0 3px #000,0 0 18px var(--glow)}
 .shine{position:absolute;inset:0;border-radius:50%;pointer-events:none;background:conic-gradient(from 20deg,transparent 0 18%,rgba(255,255,255,.14) 25%,transparent 32% 68%,rgba(255,255,255,.14) 75%,transparent 82%)}
+.arm{position:absolute;inset:0;transform-origin:90% 9%;transform:rotate(-12deg);transition:transform 1.5s cubic-bezier(.45,.05,.25,1);pointer-events:none}
+.music.playing .arm{transform:rotate(22deg)}
+.pivot{position:absolute;left:83%;top:2%;width:14%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#b9b9c4 45%,#6c6c78);box-shadow:0 3px 8px rgba(0,0,0,.6)}
+.rod{position:absolute;left:calc(90% - 2.5px);top:9%;width:5px;height:27%;border-radius:3px;background:linear-gradient(90deg,#9a9aa6,#f4f4f8,#8a8a96);box-shadow:2px 3px 6px rgba(0,0,0,.5)}
+.cw{position:absolute;left:calc(90% - 6px);top:-6%;width:12px;height:15%;border-radius:4px;background:linear-gradient(90deg,#444,#888,#444)}
+.head{position:absolute;left:calc(90% - 8px);top:36%;width:16px;height:26px;border-radius:3px 3px 7px 7px;background:linear-gradient(#e8e8ee,#7d7d8a);box-shadow:2px 4px 8px rgba(0,0,0,.55)}
+.song-title{font-size:1.25rem;color:var(--accent);margin-top:4px}
+.pl{display:flex;align-items:center;gap:10px;margin-top:12px}
+.pbtn{width:54px;height:54px;padding:0;margin:0;flex:none;display:grid;place-items:center;box-shadow:0 4px 16px var(--glow)}
+.pbtn svg{width:24px;height:24px;fill:currentColor}
+.pbtn .i-pause,.music.playing .pbtn .i-play{display:none}
+.music.playing .pbtn .i-pause{display:block}
+.tm{font-size:.85rem;color:var(--muted);min-width:34px}
+#seek{flex:1;min-width:0;accent-color:var(--accent)}
+.em{-webkit-text-fill-color:initial}
+.sk{position:relative;width:100%;max-width:320px;margin:14px auto 4px;aspect-ratio:1}
+.sk img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 8px 26px var(--glow)}
+/* zoom view */
+#zm{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:16px;background:rgba(24,10,17,.86);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);opacity:0;visibility:hidden;transition:opacity .7s ease,visibility 0s .7s}
+#zm.on{opacity:1;visibility:visible;transition:opacity .7s ease}
+.zw{position:relative;width:min(92vw,66vh,560px);aspect-ratio:1;border-radius:50%;overflow:hidden;touch-action:none;cursor:grab;box-shadow:0 0 0 3px rgba(255,201,220,.55),0 0 70px rgba(255,107,157,.5);-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.zw.drag{cursor:grabbing}
+.zi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}
+.zi img{width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.zh{color:#ffd9e6;font-style:italic;margin:0;text-align:center;line-height:1.6;opacity:0;transform:translateY(10px);transition:opacity 1.2s ease,transform 1.2s ease}
+.zh.show{opacity:1;transform:none}
+.zh small{display:block;opacity:.7;font-size:.85rem}
+#zm .zc{background:rgba(255,255,255,.14);margin:0}
+/* ---- belated note at the very top ---- */
+.late{background:color-mix(in srgb,var(--card) 90%,transparent);border:1.5px dashed var(--accent);border-radius:20px;padding:18px 20px;margin:0 0 26px;box-shadow:0 6px 24px var(--glow);animation:lateIn 1.2s ease both}
+.late-ic{font-size:2rem;animation:beat 2.4s ease-in-out infinite}
+.late h2{color:var(--accent);font-size:1.25rem;margin:4px 0 10px}
+.late p{line-height:1.7;margin:8px 0}
+.late .late-end{color:var(--accent);font-size:1.1rem;font-style:italic}
+@keyframes lateIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+</style></head><body>
+<section>
+<div class="late" role="note">
+<div class="late-ic">🥀</div>
+<h2>A little note before you begin…</h2>
+<p>Yesterday, <b>18 November</b>, was your birthday, and I tried so many times to show you this surprise. But you didn't get to see it, and I felt so disappointed. 😔</p>
+<p>But it's okay. Today you are here, and I'm so happy that you're seeing it now. 🥹</p>
+<p class="late-end">For me, your birthday is still today. 💗</p>
+</div>
+<p class="s">18 November</p>
+<h1 id="name">Jancy</h1>
+<div class="ring"><img class="photo" src="photo.webp" alt="Jancy"></div>
+<div class="sym">💗𓏲ּ𝄢</div>
+<div id="count"></div>
+<button onclick="go()">Open your surprise 🤍</button>
+</section>
+<section id="more" class="hide">
+<div class="beat">❤️</div>
+<div class="card"><h2 style="color:var(--accent)">To the girl I love most</h2>
+<p style="line-height:1.8">Out of everyone in this world, my heart chose you.<br><br>You are not just my girlfriend. You are my peace, my happiness, my favourite person.<br><br>If I could give you one gift, it would be to see yourself the way I see you.</p></div>
+<div class="card"><h2 style="color:var(--accent)">Why you're my person</h2>
+<div id="reason" class="s">Tap below 👇</div>
+<button onclick="nextR()">Next reason</button></div>
+<div class="card"><h2 style="color:var(--accent)">Open when... 💌</h2>
+<button onclick="op(0)">You miss me</button><button onclick="op(1)">You feel sad</button><button onclick="op(2)">You need a smile</button>
+<p id="op" class="s" style="min-height:90px;line-height:1.7;margin-top:14px">Tap an envelope 💌</p></div>
+<div class="card"><h2 style="color:var(--accent)">My promises to you</h2>
+<p style="line-height:2">I will listen to you.<br>I will be honest with you.<br>I will choose you, even on hard days.<br>I will make you smile.<br>I will love you, always. 💗🕸️𓏲ּ𝄢</p></div>
+<div class="card"><h2 style="color:var(--accent)">Something my heart wants to say 💗</h2>
+<p style="line-height:1.8">You asked me whether I am committed.<br><br>Let me tell you why I want to be: because I have you. 💗<br><br>What you are to me cannot be explained in words. I have you, and I do not want anyone else.<br><br>I do not want it because I have to. I want it because my heart has chosen you. 🤍</p></div>
+<div class="card"><h2 style="color:var(--accent)">A little wish for you</h2>
+<p style="line-height:1.8">Always be happy and stay blessed.<br><br>You face many struggles in life, but handle them with care and patience. You are stronger than you know, and you are never alone. 💗</p></div>
+<div class="card music" id="music"><h2 style="color:var(--accent)">A song for you 🎶</h2>
+<p class="s">Press play and let this song say what my heart feels.</p>
+<div class="deck"><div class="tt">
+<div class="vinyl" id="vinyl" role="button" tabindex="0" aria-label="Play or pause the song">
+<div class="disc"><img class="label" src="photo.webp" alt=""></div><div class="shine"></div></div>
+<div class="arm"><div class="cw"></div><div class="rod"></div><div class="head"></div><div class="pivot"></div></div>
+</div></div>
+<div class="song-title">Vazhimuzhudhum Varuvayaa</div>
+<div class="s">Sung by different singers, but dedicated from my heart to you 💕</div>
+<div class="pl"><button id="pbtn" class="pbtn" aria-label="Play song">
+<svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+<svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg></button>
+<span id="cur" class="tm">0:00</span><input id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Song position"><span id="dur" class="tm">0:00</span></div>
+<audio id="song" src="song.mp3" preload="metadata"></audio></div>
+<div class="card"><h2 style="color:var(--accent)">A sketch of you ✏️</h2>
+<p class="s">Even a pencil sketch can only show a little of how beautiful you are.</p>
+<div class="sk" id="sk"><img src="sketch.webp" alt="Pencil sketch portrait of Jancy" loading="lazy"></div>
+<button id="lookBtn" type="button">Look closer 🔍</button>
+<p class="s" style="margin-top:12px">My favourite face in the whole world. 💗</p></div>
+<div class="card"><h2 style="color:var(--accent)">A letter for you</h2>
+<div id="letter"></div></div>
+<p class="s" style="font-size:1.2rem;line-height:1.8;color:var(--accent)">And finally, after all this, I will be there for you and stand by you in any situation. 🥹😚</p>
+<p class="s">Forever yours,<br><b>Tamil</b><br><span class="sym">💗🕸️𓏲ּ𝄢</span></p>
+<footer class="ft">Made with 💗 by <a href="https://tamxbb00.github.io/tamxwize.com/" target="_blank" rel="noopener">TAMX Wize Technologies</a><br>Tamil Deepa Sudar</footer>
+</section>
+<script src="script.js?v=4"></script><script src="bg.js?v=1"></script></body></html>
