@@ -2,7 +2,8 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c0f15;--fg:#ffe8ef;--accent:#ff6b9d;--card:#2b1620;--muted:#d49ab0;--glow:rgba(255,107,157,.45);color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#1c0f15;--fg:#ffe8ef;--accent:#ff6b9d;--card:#2b1620;--muted:#d49ab0;--glow:rgba(255,107,157,.45);color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif;text-align:center;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Georgia,'Times New Roman',serif;text-align:center;overflow-x:hidden;overflow-x:clip;max-width:100%;touch-action:pan-y;overscroll-behavior-x:none}
+html{overflow-x:hidden;overflow-x:clip;max-width:100%}
 section{padding:44px 22px;max-width:560px;margin:auto}
 h1{font-size:2.6rem;margin:6px 0;color:var(--accent);min-height:3.2rem}
 .s{font-style:italic;color:var(--muted)}
@@ -45,3 +46,46 @@ h1{background:linear-gradient(90deg,var(--accent),#ffb3cf,var(--accent));backgro
 .card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .music .deck{box-shadow:0 10px calc(30px + var(--bass,0)*46px) var(--glow),inset 0 1px 0 rgba(255,255,255,.08)}
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 45%,var(--glow),transparent 60%);opacity:calc(var(--pulse,0)*.35)}
+
+/* --- anti-shake fixes --- */
+.h,.sp{will-change:transform;contain:layout paint}
+.sk img{aspect-ratio:1}
+body.zoom-open{overflow:hidden;touch-action:none}
+#zm{overscroll-behavior:contain;touch-action:none}
+.zi{will-change:transform}
+
+/* ---- scroll + aesthetic animations ---- */
+#sp{position:fixed;left:0;top:0;width:100%;height:3px;z-index:60;pointer-events:none;transform-origin:0 50%;transform:scaleX(var(--p,0));
+background:linear-gradient(90deg,var(--accent),#ffb3cf,#c77dff);box-shadow:0 0 12px var(--glow)}
+/* parallax drift (uses the independent `translate` property, so it never fights other animations) */
+.ring{translate:0 calc(var(--sy,0)*.14px)}
+#name{translate:0 calc(var(--sy,0)*.06px)}
+#more .beat{translate:0 calc(var(--sy,0)*-.02px)}
+/* alternating card entrance */
+.card.rv-a{transform:translateY(46px) rotate(-1.6deg) scale(.95)}
+.card.rv-b{transform:translateY(46px) rotate(1.6deg) scale(.95)}
+.card.rv.in{transform:none}
+.card.rv{transition:opacity 1.1s ease,transform 1.2s cubic-bezier(.2,.8,.25,1),translate .4s ease,box-shadow .4s ease}
+/* children rise one after another */
+.card.in>*{animation:cup .9s cubic-bezier(.2,.8,.25,1) both;animation-delay:calc(var(--i,0)*.11s + .2s)}
+.card.in>h2{animation-name:hin}
+@keyframes cup{from{opacity:0;transform:translateY(18px)}}
+@keyframes hin{from{opacity:0;letter-spacing:.16em;transform:translateY(10px)}}
+/* soft light sweep across a card when it appears */
+.card{position:relative}
+.card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.4) 50%,transparent 60%);background-size:250% 100%;background-position:160% 0}
+.card.in::after{animation:sweep 1.7s ease .35s 1 both}
+@keyframes sweep{0%{opacity:1;background-position:160% 0}100%{opacity:0;background-position:-60% 0}}
+@media (hover:hover){.card:hover{translate:0 -5px;box-shadow:0 14px 34px var(--glow)}}
+/* buttons: ripple, press, breathing glow on the main one */
+button{position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .3s ease}
+button:active{transform:scale(.95)}
+section:first-of-type>button{animation:bglow 2.6s ease-in-out infinite}
+@keyframes bglow{0%,100%{box-shadow:0 0 0 0 var(--glow)}50%{box-shadow:0 0 0 14px rgba(224,69,123,0),0 6px 26px var(--glow)}}
+.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rip .65s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+/* bouncing "scroll" hint under the first button */
+.sh{font-size:1.8rem;color:var(--accent);margin-top:4px;line-height:1;animation:bounce 1.6s ease-in-out infinite;transition:opacity .6s ease}
+@keyframes bounce{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(8px);opacity:1}}
+@media (prefers-reduced-motion:reduce){.ring,#name,#more .beat{translate:none}.card::after{display:none}#sp{transition:none}}
